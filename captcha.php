@@ -1,4 +1,7 @@
 <?php
+require_once __DIR__ . '/BadBotBlocker.php';
+require_once __DIR__ . '/config-test.php';
+
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $curl = curl_init();
     curl_setopt(
@@ -21,8 +24,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     curl_setopt($curl, CURLOPT_TIMEOUT, 5);
     $response = json_decode(trim(curl_exec($curl)), true);
     if (!empty($response['success']) and $response['success'] == 'true') {
-        require_once __DIR__ . '/BadBotBlocker.php';
-        require_once __DIR__ . '/config-test.php';
         $badBotObj = new BadBotBlocker(true);
         $badBotObj->enableAccess();
         if (!empty($_GET['url'])) {
