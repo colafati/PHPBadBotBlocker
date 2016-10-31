@@ -17,4 +17,5 @@ if ($badBotResponse == 'captcha') {
     );
     exit;
 }
+
 echo $badBotResponse;
