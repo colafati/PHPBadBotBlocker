@@ -1,5 +1,7 @@
 <?php
 
+namespace BadBotBlocker;
+
 /**
  * class BadBotBlocker
  * 
