@@ -3,7 +3,7 @@
 require_once __DIR__ . '/BadBotBlocker.php';
 require_once __DIR__ . '/config-test.php';
 
-$badBotObj = new BadBotBlocker(true);
+$badBotObj = new BadBotBlocker\Blocker(true);
 $badBotResponse = $badBotObj->checkAccess();
 if ($badBotResponse == 'captcha') {
     header(
