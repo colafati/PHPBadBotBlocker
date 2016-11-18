@@ -15,7 +15,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $curl,
         CURLOPT_POSTFIELDS,
         array(
-            'secret' => '6LfAqQoUAAAAAG8uwud3o_4CBxITWT2qSYVM8ZyF',
+            'secret' => CAPTCHA_SECRET,
             'response' => $_POST['g-recaptcha-response'],
             'remoteip' => $_SERVER['REMOTE_ADDR']
         )
@@ -39,7 +39,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     }
 }
 $url = filter_input(INPUT_GET, 'url');
-$key = '6LfAqQoUAAAAAJClb7DM8o6C2jTfvr8k9cpDxn4H';
+$key = CAPTCHA_KEY;
 ?>
 <html>
     <head>
