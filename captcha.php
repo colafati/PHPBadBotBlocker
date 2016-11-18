@@ -24,7 +24,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     curl_setopt($curl, CURLOPT_TIMEOUT, 5);
     $response = json_decode(trim(curl_exec($curl)), true);
     if (!empty($response['success']) and $response['success'] == 'true') {
-        $badBotObj = new BadBotBlocker(true);
+        $badBotObj = new BadBotBlocker\Blocker(true);
         $badBotObj->enableAccess();
         if (!empty($_GET['url'])) {
             header(

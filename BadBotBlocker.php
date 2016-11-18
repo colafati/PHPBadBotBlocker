@@ -13,7 +13,7 @@ namespace BadBotBlocker;
  *
  * @package  BadBotBlocker
  */
-class BadBotBlocker
+class Blocker
 {
     public $error = false;
     private $memcacheHost = false;
@@ -99,7 +99,7 @@ class BadBotBlocker
             $this->error = true;
             return false;
         }
-        $this->cacheObj = new Memcache();
+        $this->cacheObj = new \Memcache();
         $this->memcacheEnabled = true;
         if (!$this->cacheObj->pconnect($this->memcacheHost, $this->memcachePort)) {
             $this->cacheObj = null;
