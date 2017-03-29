@@ -64,13 +64,13 @@ class Blocker
         if ($this->error === true) {
             return 'error';
         }
-        $requestsCount = (int) $this->getData($this->cacheKeyPrefix . $_SERVER['REMOTE_ADDR']);
+        $requestsCount = (int) $this->getData($this->cacheKeyPrefix . filter_input(INPUT_SERVER, 'REMOTE_ADDR'));
         if ($requestsCount >= $this->requestsLimit) {
             $this->showCaptcha = true;
             return 'captcha';
         }
         $requestsCount++;
-        $this->setData($this->cacheKeyPrefix . $_SERVER['REMOTE_ADDR'], $requestsCount, $this->requestsPeriod);
+        $this->setData($this->cacheKeyPrefix . filter_input(INPUT_SERVER, 'REMOTE_ADDR'), $requestsCount, $this->requestsPeriod);
         return 'ok|' . $requestsCount;
     }
 
@@ -84,7 +84,7 @@ class Blocker
         if ($this->error === true) {
             return 'error';
         }
-        $this->deleteData($this->cacheKeyPrefix . $_SERVER['REMOTE_ADDR']);
+        $this->deleteData($this->cacheKeyPrefix . filter_input(INPUT_SERVER, 'REMOTE_ADDR'));
         return 'ok';
     }
 
