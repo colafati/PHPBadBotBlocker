@@ -88,7 +88,7 @@ class Blocker
     /**
      * Connect to Memcance and se the Mencache object
      *
-     * @return boolean
+     * @return false|null
      */
     private function memcacheConnect()
     {
@@ -140,7 +140,7 @@ class Blocker
     /**
      * Delete data from a memcache key
      *
-     * @param type $sKey
+     * @param string $sKey
      * @return bool
      */
     private function deleteData($sKey)
