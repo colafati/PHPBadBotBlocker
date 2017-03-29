@@ -15,9 +15,11 @@ namespace BadBotBlocker;
  */
 class Blocker
 {
+    protected $cacheObj;
+    private $memcacheHost = '';
+    private $memcachePort = '';
+    private $memcacheEnabled = false;
     public $error = false;
-    private $memcacheHost = false;
-    private $memcachePort = false;
     public $requestsLimit = 50;
     public $requestsPeriod = 1200; // In seconds where 60 * 20 minutes
     public $blockByAgent = false;
@@ -28,9 +30,10 @@ class Blocker
 
     public function __construct($debug = false)
     {
+        $this->debug = $debug;
         if ($this->checkConfig() === false) {
             $this->error = true;
-            return false;
+            return;
         }
         $this->memcacheHost = MEMCACHE_HOST;
         $this->memcachePort = MEMCACHE_PORT;
@@ -45,7 +48,7 @@ class Blocker
     private function checkConfig()
     {
         if (!constant('MEMCACHE_HOST') || !constant('MEMCACHE_PORT')) {
-            $this->debugContent .= 'Missing config constants.' . PHP_EOL;
+            $this->setDebugContent('Missing config constants.');
             return false;
         }
         return true;
@@ -58,7 +61,7 @@ class Blocker
      */
     public function checkAccess()
     {
-        if ($this->error == true) {
+        if ($this->error === true) {
             return 'error';
         }
         $requestsCount = (int) $this->getData($this->cacheKeyPrefix . $_SERVER['REMOTE_ADDR']);
@@ -78,7 +81,7 @@ class Blocker
      */
     public function enableAccess()
     {
-        if ($this->error == true) {
+        if ($this->error === true) {
             return 'error';
         }
         $this->deleteData($this->cacheKeyPrefix . $_SERVER['REMOTE_ADDR']);
@@ -93,7 +96,7 @@ class Blocker
     private function memcacheConnect()
     {
         if (!class_exists('Memcache') || !function_exists('memcache_connect')) {
-            $this->debugContent .= 'Memcache Library not loaded.' . PHP_EOL;
+            $this->setDebugContent('Memcache Library not loaded.');
             $this->cacheObj = null;
             $this->memcacheEnabled = false;
             $this->error = true;
@@ -105,7 +108,7 @@ class Blocker
             $this->cacheObj = null;
             $this->memcacheEnabled = false;
             $this->error = true;
-            $this->debugContent .= 'Can\'t connect to memcache server.' . PHP_EOL;
+            $this->setDebugContent('Can\'t connect to memcache server.');
         }
     }
 
@@ -146,5 +149,15 @@ class Blocker
     private function deleteData($sKey)
     {
         return $this->cacheObj->delete(md5($sKey));
+    }
+    
+    /**
+     * Put debug content in debug property
+     *
+     * @param string $debugContent
+     */
+    private function setDebugContent($debugContent)
+    {
+        $this->debugContent .= $debugContent . PHP_EOL;
     }
 }
