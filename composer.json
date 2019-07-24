@@ -1,0 +1,17 @@
+{
+    "name": "colafati/phpbadbotblocker",
+    "type": "library",
+     "license": "MIT",
+    "description": "Block requests by IP based on limiting rules",
+    "authors": [
+        {
+            "name": "Everton Colafati",
+            "email": "colafati@gmail.com"
+        }
+    ],
+    "require": {
+        "php": "^7.1.3",
+        "ext-memcache": "*"
+    },
+    "minimum-stability": "stable"
+}
